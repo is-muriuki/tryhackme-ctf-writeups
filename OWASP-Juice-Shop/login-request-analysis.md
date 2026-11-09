@@ -103,3 +103,45 @@ Screenshots will be added after the lab is restarted.
 - Network request showing POST and status 401
 - Request headers showing JSON Content-Type
 - Payload showing field names, with sensitive values hidden
+## 6. Additional Investigation: Security Answers API
+
+### Objective
+
+Investigate how the registration form submits security-question information to the server.
+
+### Observations
+
+| Property | Finding |
+|---|---|
+| HTTP method | POST |
+| Endpoint | `/api/SecurityAnswers/` |
+| HTTP status | 200 OK |
+| Request format | application/json |
+| Payload fields | answer, securityId, userId |
+| Application status | success |
+| Response data | null |
+
+### Technical Analysis
+
+The browser sent security-question information to the Security Answers API using a POST request.
+
+The payload contained three fields:
+
+- `answer`: the submitted security answer.
+- `securityId`: identifies the selected security question.
+- `userId`: identifies the associated user account.
+
+The application returned a success status, while the data field was null.
+
+### Security Consideration
+
+The presence of a userId in a request does not automatically indicate an authorization vulnerability.
+
+Authorization checks must ensure that users can only perform permitted actions on the relevant account data.
+
+### Lessons Learned
+
+- API endpoints handle specific application operations.
+- JSON is commonly used for API communication.
+- HTTP status codes and application-level status values are different.
+- A successful API response does not automatically prove that the operation is secure.
